@@ -1,14 +1,21 @@
 package com.burgas123.flashchatnewfirebase;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -17,7 +24,6 @@ public class RegisterActivity extends AppCompatActivity {
     public static final String CHAT_PREFS = "ChatPrefs";
     public static final String DISPLAY_NAME_KEY = "username";
 
-    // TODO: Add member variables here:
     // UI references.
     private AutoCompleteTextView mEmailView;
     private AutoCompleteTextView mUsernameView;
@@ -25,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mConfirmPasswordView;
 
     // Firebase instance variables
-
+    private FirebaseAuth mFirebaseAuth = null;
 
 
     @Override
@@ -50,9 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Get hold of an instance of FirebaseAuth
-
-
+        mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
     // Executed when Sign Up button is pressed.
@@ -96,8 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // TODO: Call create FirebaseUser() here
-
+            this.createFirebaseUser();
         }
     }
 
@@ -107,12 +110,26 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Add own logic to check for a valid password (minimum 6 characters)
-        return true;
+        String confirmPassword = mConfirmPasswordView.getText().toString();
+        return confirmPassword.equals(password) && password.length() > 5;
     }
 
-    // TODO: Create a Firebase user
+    private void createFirebaseUser(){
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
 
+        // Kick-off process.
+        mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.i("Chat App", "User creation: " + task.isSuccessful());
+
+                if(!task.isSuccessful()){
+                    Log.e("Chat App", "User creation failed.");
+                }
+            }
+        });
+    }
 
     // TODO: Save the display name to Shared Preferences
 
