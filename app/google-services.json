@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "17802619877",
+    "firebase_url": "https://fir-testchat-ee529.firebaseio.com",
+    "project_id": "fir-testchat-ee529",
+    "storage_bucket": "fir-testchat-ee529.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17802619877:android:a16ef7d81652d167",
+        "android_client_info": {
+          "package_name": "com.burgas123.flashchatnewfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17802619877-cntu5s5qjglgh6jk613hk9uvhdpchguj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_-EaZc4DgQmnrKJeJ0e2FbYEZ6hjuEFc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
