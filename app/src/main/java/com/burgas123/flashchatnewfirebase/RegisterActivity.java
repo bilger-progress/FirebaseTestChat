@@ -1,5 +1,7 @@
 package com.burgas123.flashchatnewfirebase;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -129,12 +131,22 @@ public class RegisterActivity extends AppCompatActivity {
                     Log.e("Chat App", "User creation failed.");
                     Log.e("Chat App", task.getException().toString());
                     showErrorDialog("Registration Failed!");
+                } else {
+                    saveDisplayName();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    finish();
+                    startActivity(intent);
                 }
             }
         });
     }
 
-    // TODO: Save the display name to Shared Preferences
+    private void saveDisplayName(){
+        String displayName = mUsernameView.getText().toString();
+        SharedPreferences prefs = getSharedPreferences(CHAT_PREFS, 0);
+        prefs.edit().putString(DISPLAY_NAME_KEY, displayName).apply();
+
+    }
 
     private void showErrorDialog(String message) {
         new AlertDialog.Builder(this)
