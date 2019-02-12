@@ -2,6 +2,7 @@ package com.burgas123.flashchatnewfirebase;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -126,6 +127,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(!task.isSuccessful()){
                     Log.e("Chat App", "User creation failed.");
+                    Log.e("Chat App", task.getException().toString());
+                    showErrorDialog("Registration Failed!");
                 }
             }
         });
@@ -133,10 +136,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     // TODO: Save the display name to Shared Preferences
 
-
-    // TODO: Create an alert dialog to show in case registration failed
-
-
-
-
+    private void showErrorDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle("Error occured.")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 }
